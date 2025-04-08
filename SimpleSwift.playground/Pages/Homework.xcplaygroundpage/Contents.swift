@@ -27,10 +27,92 @@ print("Welcome to the UW Calculator Playground")
 //: For this latter set of operations, it is safe to assume that `["count"]` (with no additional arguments) is 0, `["avg"]` is also 0, and `["fact"]` is 0. `["1", "fact"]` should return 1, and `["0", "fact"]` should also return 1. (Yes, 0-factorial is 1. True story.)
 //: 
 func calculate(_ args: [String]) -> Int {
+    if args.count == 3{
+        var arithmeticOp = args[1]
+        var num1 = Int(args[0]) ?? 0
+        var num2 = Int(args[2]) ?? 0
+        
+        switch arithmeticOp {
+        case "+": return num1 + num2
+        case "-": return num1 - num2
+        case "*": return num1 * num2
+        case "/": return num2 != 0 ? num1 / num2 : 0
+        case "%": return num2 != 0 ? num1 % num2 : 0
+        default: return -1
+        }
+    }else if args.last == "count"{
+        return args.count >= 2 ? args.count - 1 : 0
+    }else if args.last == "avg"{
+        if args.count == 1{
+            return 0
+        }else{
+            var avg = 0
+            for index in 0..<args.count-1{
+                avg += Int(args[index]) ?? 0
+            }
+            return avg / (args.count-1)
+        }
+    }else if args.first == "fact" {
+        return  0
+    }
+    else if args.last == "fact"{
+        var num = Int(args[0]) ?? 0
+        var fact = 1
+        if num == 0 || num == 1 {
+            return 1
+        }else{
+            for index in stride(from: num, through: 1, by: -1){
+                fact *= index
+            }
+            return fact
+        }
+        
+    }
     return -1
 }
 
 func calculate(_ arg: String) -> Int {
+    let separateString = arg.split(separator: " ").map { String($0) }
+
+        if separateString.count == 3 {
+            let arithmeticOp = separateString[1]
+            let num1 = Int(separateString[0]) ?? 0
+            let num2 = Int(separateString[2]) ?? 0
+
+            switch arithmeticOp {
+            case "+": return num1 + num2
+            case "-": return num1 - num2
+            case "*": return num1 * num2
+            case "/": return num2 != 0 ? num1 / num2 : 0
+            case "%": return num2 != 0 ? num1 % num2 : 0
+            default: return -1
+            }
+        } else if separateString.last == "count" {
+            return separateString.count >= 2 ? separateString.count - 1 : 0
+        } else if separateString.last == "avg" {
+            if separateString.count == 1 {
+                return 0
+            } else {
+                var avg = 0
+                for index in 0..<separateString.count - 1 {
+                    avg += Int(separateString[index]) ?? 0
+                }
+                return avg / (separateString.count - 1)
+            }
+        } else if separateString.first == "fact" {
+            return 0
+        } else if separateString.last == "fact" {
+            let num = Int(separateString[0]) ?? 0
+            var fact = 1
+            if num == 0 || num == 1 {
+                return 1
+            } else {
+                for index in stride(from: num, through: 1, by: -1) {
+                    fact *= index
+                }
+                return fact
+            }
+        }
     return -1
 }
 
